@@ -30,6 +30,13 @@
 			keyProperty="name"
 			modelVar="tag"
 		>
+			<%
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"value", tag.getName()
+					).put("tagId", tag.getTagId()).build());
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="content-column name-column title-column"
 				name="name"
