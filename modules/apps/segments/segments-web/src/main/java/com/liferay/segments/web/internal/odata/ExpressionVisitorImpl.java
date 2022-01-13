@@ -240,7 +240,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		BinaryExpression.Operation operation, JSONObject leftJSONObject,
 		JSONObject rightJSONObject) {
 
-		String conjunctionName = rightJSONObject.getString("conjunctionName");
+		String conjunctionName = leftJSONObject.getString("conjunctionName");
 
 		_groupCount++;
 
@@ -258,10 +258,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 					"groupId", "group_" + _groupCount
 				).put(
 					"items",
-					rightJSONObject.getJSONArray(
+					leftJSONObject.getJSONArray(
 						"items"
 					).put(
-						leftJSONObject
+						rightJSONObject
 					)
 				);
 			}
