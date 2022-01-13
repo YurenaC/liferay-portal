@@ -70,16 +70,17 @@ public class ExpressionVisitorImplTest {
 			(JSONObject)_expressionVisitorImpl.visitBinaryExpressionOperation(
 				BinaryExpression.Operation.AND,
 				_expressionVisitorImpl.visitBinaryExpressionOperation(
-					BinaryExpression.Operation.EQ, entityFieldsMap.get("title"),
-					"title1"),
-				_expressionVisitorImpl.visitBinaryExpressionOperation(
 					BinaryExpression.Operation.AND,
 					_expressionVisitorImpl.visitBinaryExpressionOperation(
 						BinaryExpression.Operation.EQ,
 						entityFieldsMap.get("title"), "title1"),
 					_expressionVisitorImpl.visitBinaryExpressionOperation(
 						BinaryExpression.Operation.EQ,
-						entityFieldsMap.get("title"), "title1")));
+						entityFieldsMap.get("title"), "title1")),
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.EQ, entityFieldsMap.get("title"),
+					"title1")
+				);
 
 		Assert.assertEquals("and", jsonObject.getString("conjunctionName"));
 		Assert.assertEquals("group_2", jsonObject.getString("groupId"));
