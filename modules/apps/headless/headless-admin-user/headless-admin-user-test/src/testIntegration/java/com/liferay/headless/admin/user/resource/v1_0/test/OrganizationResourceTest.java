@@ -20,6 +20,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -222,7 +224,27 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	@Override
+	protected Organization
+			testDeleteOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		Organization organization = randomOrganization();
+
+		return _toOrganization(
+			_organizationLocalService.addOrganization(
+				_user.getUserId(), 0, organization.getName(), true));
+	}
+
+	@Override
 	protected Organization testGetOrganization_addOrganization()
+		throws Exception {
+
+		return _addUserOrganization(_user.getUserId(), randomOrganization());
+	}
+
+	@Override
+	protected Organization
+			testGetOrganizationByExternalReferenceCode_addOrganization()
 		throws Exception {
 
 		return _addUserOrganization(_user.getUserId(), randomOrganization());
@@ -292,6 +314,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	@Override
+	protected Organization
+			testPatchOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		return _addUserOrganization(_user.getUserId(), randomOrganization());
+	}
+
+	@Override
 	protected Organization testPostOrganization_addOrganization(
 			Organization organization)
 		throws Exception {
@@ -306,13 +336,25 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		return _addUserOrganization(_user.getUserId(), randomOrganization());
 	}
 
+	@Override
+	protected Organization
+			testPutOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		return _addUserOrganization(_user.getUserId(), randomOrganization());
+	}
+
 	private com.liferay.portal.kernel.model.Organization _addOrganization(
 			Organization organization, String parentOrganizationId)
 		throws Exception {
 
-		return _organizationLocalService.addOrganization(
-			_user.getUserId(), GetterUtil.getLong(parentOrganizationId),
-			organization.getName(), true);
+		String[] types = _organizationLocalService.getTypes();
+
+		return _organizationLocalService.addOrUpdateOrganization(
+			organization.getExternalReferenceCode(), _user.getUserId(),
+			GetterUtil.getLong(parentOrganizationId), organization.getName(),
+			types[0], 0, 0, ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			StringPool.BLANK, false, null, true, null);
 	}
 
 	private Organization _addUserOrganization(
@@ -342,6 +384,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			{
 				dateCreated = organization.getCreateDate();
 				dateModified = organization.getModifiedDate();
+				externalReferenceCode = organization.getExternalReferenceCode();
 				id = String.valueOf(organization.getOrganizationId());
 				name = organization.getName();
 			}
