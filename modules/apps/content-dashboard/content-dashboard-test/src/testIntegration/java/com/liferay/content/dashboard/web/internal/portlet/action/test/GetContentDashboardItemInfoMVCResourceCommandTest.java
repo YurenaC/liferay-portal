@@ -117,7 +117,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testServeResourceMio() throws Exception {
+	public void testServeResource() throws Exception {
 		User user = TestPropsValues.getUser();
 		user.setPortraitId(12345L);
 
