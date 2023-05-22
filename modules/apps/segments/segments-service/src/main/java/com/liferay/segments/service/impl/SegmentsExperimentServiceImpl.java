@@ -172,10 +172,9 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public List<SegmentsExperiment> getSegmentsExperiments(
-		long groupId, long classNameId, long classPK) {
+		long groupId, long plid) {
 
-		return segmentsExperimentPersistence.filterFindByG_C_C(
-			groupId, classNameId, classPK);
+		return segmentsExperimentPersistence.filterFindByG_P(groupId, plid);
 	}
 
 	@Override
@@ -226,7 +225,7 @@ public class SegmentsExperimentServiceImpl
 			segmentsExperienceIdSplitMap.put(
 				_getSegmentsExperienceId(
 					segmentsExperiment.getGroupId(), entry.getKey(),
-					segmentsExperiment.getClassPK()),
+					segmentsExperiment.getPlid()),
 				entry.getValue());
 		}
 
@@ -314,7 +313,7 @@ public class SegmentsExperimentServiceImpl
 			segmentsExperiment.getSegmentsExperimentId(),
 			_getSegmentsExperienceId(
 				segmentsExperiment.getGroupId(), winnerSegmentsExperienceKey,
-				segmentsExperiment.getClassPK()),
+				segmentsExperiment.getPlid()),
 			status);
 	}
 
