@@ -60,6 +60,11 @@ public class UserSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 	}
 
 	@Override
+	public String getIcon() {
+		return "user";
+	}
+
+	@Override
 	public String getClassName() {
 		return User.class.getName();
 	}

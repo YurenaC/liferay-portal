@@ -80,6 +80,12 @@ public class OrganizationSegmentsFieldCustomizer
 		return organization.getName();
 	}
 
+
+	@Override
+	public String getIcon() {
+		return "organizations";
+	}
+
 	@Override
 	public String getKey() {
 		return KEY;

@@ -64,6 +64,11 @@ public class AssetTagSegmentsFieldCustomizer
 	}
 
 	@Override
+	public String getIcon() {
+		return "tags";
+	}
+
+	@Override
 	public String getClassName() {
 		return AssetTag.class.getName();
 	}

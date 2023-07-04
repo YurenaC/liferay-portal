@@ -64,6 +64,11 @@ public class AssetCategorySegmentsFieldCustomizer
 	}
 
 	@Override
+	public String getIcon() {
+		return "categories";
+	}
+
+	@Override
 	public String getClassName() {
 		return AssetCategory.class.getName();
 	}

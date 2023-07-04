@@ -63,6 +63,11 @@ public class UserGroupSegmentsFieldCustomizer
 	}
 
 	@Override
+	public String getIcon() {
+		return "users";
+	}
+
+	@Override
 	public String getClassName() {
 		return UserGroup.class.getName();
 	}
