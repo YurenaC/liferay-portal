@@ -114,7 +114,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
 			long previewFileEntryId, boolean defaultTemplate,
-			long layoutPrototypeId, long plid, long masterLayoutPlid,
+			long layoutPrototypeId, long parentLayoutPageTemplateCollectionId,
+			long plid, long masterLayoutPlid,
 			int status, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -149,6 +150,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setType(type);
 		layoutPageTemplateEntry.setPreviewFileEntryId(previewFileEntryId);
 		layoutPageTemplateEntry.setDefaultTemplate(defaultTemplate);
+		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(parentLayoutPageTemplateCollectionId);
 
 		layoutPageTemplateEntry = layoutPageTemplateEntryPersistence.update(
 			layoutPageTemplateEntry);
@@ -212,7 +214,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
-			long masterLayoutPlid, int status, ServiceContext serviceContext)
+			long masterLayoutPlid, long parentLayoutPageTemplateCollectionId,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
