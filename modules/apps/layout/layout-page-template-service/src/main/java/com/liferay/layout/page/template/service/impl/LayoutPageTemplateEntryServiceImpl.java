@@ -59,7 +59,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long groupId, long layoutPageTemplateCollectionId, long classNameId,
 		long classTypeId, String name, long masterLayoutPlid,
-		long parentLayoutPageTemplateCollectionId ,int status,
+		long parentLayoutPageTemplateCollectionId, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -71,7 +71,8 @@ public class LayoutPageTemplateEntryServiceImpl
 			getUserId(), groupId, layoutPageTemplateCollectionId, classNameId,
 			classTypeId, name,
 			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-			masterLayoutPlid, status, serviceContext);
+			masterLayoutPlid, parentLayoutPageTemplateCollectionId,
+			status, serviceContext);
 	}
 
 	@Override
@@ -131,7 +132,8 @@ public class LayoutPageTemplateEntryServiceImpl
 				targetLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				0, 0, name, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				false, 0, 0, sourceLayout.getMasterLayoutPlid(),
+				false, 0, 0, -1,
+				sourceLayout.getMasterLayoutPlid(),
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		Layout layout = _layoutLocalService.getLayout(

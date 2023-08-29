@@ -119,14 +119,14 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 		long masterLayoutPlid = ParamUtil.getLong(
 			actionRequest, "masterLayoutPlid");
 		long parentLayoutPageTemplateCollectionId = ParamUtil.getLong(
-			actionRequest, "parentLayoutPageTemplateCollectionId");
+			actionRequest, "parentLayoutPageTemplateCollectionId", -1);
 
 		try {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, classNameId, classTypeId,
-					name, masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
+					name, parentLayoutPageTemplateCollectionId, masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
 			return JSONUtil.put(
