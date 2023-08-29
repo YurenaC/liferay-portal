@@ -49,7 +49,8 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	 */
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, long classNameId,
-			long classTypeId, String name, long masterLayoutPlid, int status,
+			long classTypeId, String name, long masterLayoutPlid,
+			long parentLayoutPageTemplateCollectionId, int status,
 			ServiceContext serviceContext)
 		throws PortalException;
 
