@@ -55,22 +55,6 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, long parentLayoutPageTemplateCollection, String name,
-			String description, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION);
-
-		return layoutPageTemplateCollectionLocalService.
-			addLayoutPageTemplateCollection(
-				getUserId(), groupId, parentLayoutPageTemplateCollection, name,
-				description, serviceContext);
-	}
-
-	@Override
-	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 			long groupId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -136,14 +120,6 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId) {
-
-		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
-			groupId);
-	}
-
-	@Override
-	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, int type) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
@@ -152,50 +128,52 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end) {
+		long groupId, int start, int end, int type) {
 
-		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
-			groupId, start, end);
+		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
+			groupId, start, end, type);
 	}
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
+		int type) {
 
-		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
-			groupId, start, end, orderByComparator);
+		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
+			groupId, start, end, type, orderByComparator);
 	}
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, String name, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
+		int type) {
 
-		return layoutPageTemplateCollectionPersistence.filterFindByG_LikeN(
+		return layoutPageTemplateCollectionPersistence.filterFindByG_LikeN_T(
 			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
-			start, end, orderByComparator);
+			type, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getLayoutPageTemplateCollectionsCount(long groupId) {
-		return layoutPageTemplateCollectionPersistence.filterCountByGroupId(
-			groupId);
+	public int getLayoutPageTemplateCollectionsCount(long groupId, int type) {
+		return layoutPageTemplateCollectionPersistence.filterCountByG_T(
+			groupId, type);
 	}
 
 	@Override
 	public int getLayoutPageTemplateCollectionsCount(
-		long groupId, String name) {
+		long groupId, String name, int type) {
 
-		return layoutPageTemplateCollectionPersistence.filterCountByG_LikeN(
-			groupId,
-			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+		return layoutPageTemplateCollectionPersistence.filterCountByG_LikeN_T(
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			type);
 	}
 
 	@Override
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
-			String description)
+			String description, int type)
 		throws PortalException {
 
 		_layoutPageTemplateCollectionModelResourcePermission.check(
@@ -204,7 +182,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 		return layoutPageTemplateCollectionLocalService.
 			updateLayoutPageTemplateCollection(
-				layoutPageTemplateCollectionId, name, description);
+				layoutPageTemplateCollectionId, name, description, type);
 	}
 
 	@Reference
