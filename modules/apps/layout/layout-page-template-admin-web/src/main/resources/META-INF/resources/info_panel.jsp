@@ -19,6 +19,87 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 %>
 
 <c:choose>
+	<c:when test="<%= ListUtil.isEmpty(layoutPageTemplateCollections) && ListUtil.isNotEmpty(layoutPageTemplateEntries) && (layoutPageTemplateEntries.size() == 1) %>">
+
+		<%
+		LayoutPageTemplateEntry layoutPageTemplateEntry = layoutPageTemplateEntries.get(0);
+		%>
+
+		<div class="sidebar-header">
+			<clay:content-row
+				cssClass="sidebar-section"
+			>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<h1 class="component-title">
+						<%= HtmlUtil.escape(layoutPageTemplateEntry.getName()) %>
+					</h1>
+
+					<h2 class="component-subtitle">
+						<liferay-ui:message key="display-page-template" />
+					</h2>
+				</clay:content-col>
+			</clay:content-row>
+		</div>
+
+		<div class="sidebar-body">
+			<p class="sidebar-dt">
+				<liferay-ui:message key="location" />
+			</p>
+
+			<%
+			long layoutPageTemplateCollectionId = ParamUtil.getLong(request, "layoutPageTemplateCollectionId");
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection = LayoutPageTemplateCollectionLocalServiceUtil.fetchLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
+
+			List<String> paths = new ArrayList<>();
+			%>
+
+			<c:if test="<%= layoutPageTemplateCollection == null %>">
+
+				<%
+				paths.add(LanguageUtil.get(request, "home"));
+				%>
+
+			</c:if>
+
+			<c:if test="<%= layoutPageTemplateCollection != null %>">
+
+				<%
+				paths = TransformUtil.transform(layoutPageTemplateCollection.getAncestors(), curLayoutPageTemplateCollection -> HtmlUtil.escape(curLayoutPageTemplateCollection.getName()));
+
+				paths.add(LanguageUtil.get(request, "home"));
+
+				Collections.reverse(paths);
+				%>
+
+			</c:if>
+
+			<p class="sidebar-dd text-secondary">
+				<clay:icon
+					symbol="folder"
+				/>
+				<%= StringUtil.merge(paths, " > ") %>
+			</p>
+
+			<p class="sidebar-dt">
+				<liferay-ui:message key="created" />
+			</p>
+
+			<p class="sidebar-dd text-secondary">
+				<%= dateFormatDateTime.format(layoutPageTemplateEntry.getCreateDate()) %>
+			</p>
+
+			<p class="sidebar-dt">
+				<liferay-ui:message key="modified" />
+			</p>
+
+			<p class="sidebar-dd text-secondary">
+				<%= dateFormatDateTime.format(layoutPageTemplateEntry.getModifiedDate()) %>
+			</p>
+		</div>
+	</c:when>
 	<c:when test="<%= ListUtil.isNotEmpty(layoutPageTemplateCollections) && ListUtil.isEmpty(layoutPageTemplateEntries) && (layoutPageTemplateCollections.size() == 1) %>">
 
 		<%
