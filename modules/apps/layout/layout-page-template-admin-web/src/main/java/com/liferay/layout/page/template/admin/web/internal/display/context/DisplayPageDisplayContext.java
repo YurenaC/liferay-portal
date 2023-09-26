@@ -33,15 +33,12 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -222,15 +219,6 @@ public class DisplayPageDisplayContext {
 		return _displayPagesSearchContainer;
 	}
 
-	public int getHomeItemsCount(long scopeGroupId) {
-		return LayoutPageTemplateEntryServiceUtil.
-			getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-				scopeGroupId,
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
-	}
-
 	public String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -271,76 +259,6 @@ public class DisplayPageDisplayContext {
 		Collections.reverse(breadcrumbEntries);
 
 		return breadcrumbEntries;
-	}
-
-	public LayoutPageTemplateCollection getLayoutPageTemplateCollection(
-		long layoutPageTemplateCollectionId) {
-
-		return LayoutPageTemplateCollectionLocalServiceUtil.
-			fetchLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
-	}
-
-	public int getLayoutPageTemplateCollectionItemsCount(
-		LayoutPageTemplateCollection layoutPageTemplateCollection) {
-
-		return LayoutPageTemplateEntryServiceUtil.
-			getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-				layoutPageTemplateCollection.getGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				layoutPageTemplateCollection.getType());
-	}
-
-	public List<LayoutPageTemplateCollection>
-		getLayoutPageTemplateCollectionList(
-			List<LayoutPageTemplateCollection> layoutPageTemplateCollections,
-			List<LayoutPageTemplateEntry> layoutPageTemplateEntries) {
-
-		if (ListUtil.isEmpty(layoutPageTemplateCollections) &&
-			ListUtil.isEmpty(layoutPageTemplateEntries)) {
-
-			layoutPageTemplateCollections = new ArrayList<>();
-
-			long layoutPageTemplateCollectionId = ParamUtil.getLong(
-				_httpServletRequest, "layoutPageTemplateCollectionId");
-
-			if (layoutPageTemplateCollectionId !=
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) {
-
-				layoutPageTemplateCollections.add(
-					LayoutPageTemplateCollectionLocalServiceUtil.
-						fetchLayoutPageTemplateCollection(
-							layoutPageTemplateCollectionId));
-			}
-			else {
-				layoutPageTemplateCollections.add(null);
-			}
-		}
-
-		return layoutPageTemplateCollections;
-	}
-
-	public List<String> getLayoutPageTemplateCollectionPath(
-		long layoutPageTemplateCollectionId) {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
-
-		List<String> paths = new ArrayList<>();
-
-		if (layoutPageTemplateCollection != null) {
-			paths = TransformUtil.transform(
-				getLayoutPageTemplateBreadcrumbEntries(),
-				curLayoutPageTemplateCollection -> HtmlUtil.escape(
-					curLayoutPageTemplateCollection.getTitle()));
-		}
-
-		paths.add(LanguageUtil.get(_httpServletRequest, "home"));
-
-		Collections.reverse(paths);
-
-		return paths;
 	}
 
 	public long getLayoutPageTemplateEntryId() {

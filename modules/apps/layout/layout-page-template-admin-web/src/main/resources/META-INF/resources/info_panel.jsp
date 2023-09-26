@@ -7,12 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayContext(request, renderRequest, renderResponse);
+<%DisplayPageInfoPanelDisplayContext displayPageInfoPanelDisplayContext = new DisplayPageDisplayContext(request, renderRequest, renderResponse);
 
-List<LayoutPageTemplateEntry> layoutPageTemplateEntries = (List<LayoutPageTemplateEntry>)request.getAttribute(LayoutPageTemplateAdminWebKeys.LAYOUT_PAGE_TEMPLATE_ENTRIES);
-
-List<LayoutPageTemplateCollection> layoutPageTemplateCollections = displayPageDisplayContext.getLayoutPageTemplateCollectionList((List<LayoutPageTemplateCollection>)request.getAttribute(LayoutPageTemplateAdminWebKeys.LAYOUT_PAGE_TEMPLATE_COLLECTIONS), layoutPageTemplateEntries);
+List<LayoutPageTemplateCollection> layoutPageTemplateCollections = displayPageInfoPanelDisplayContext.getLayoutPageTemplateCollections();
+List<LayoutPageTemplateEntry> layoutPageTemplateEntries = displayPageInfoPanelDisplayContext.getLayoutPageTemplateEntries();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
@@ -51,7 +49,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<clay:icon
 					symbol="folder"
 				/>
-				<%= StringUtil.merge(displayPageDisplayContext.getLayoutPageTemplateCollectionPath(ParamUtil.getLong(request, "layoutPageTemplateCollectionId")), " > ") %>
+				<%= StringUtil.merge(displayPageInfoPanelDisplayContext.getLayoutPageTemplateCollectionPath(ParamUtil.getLong(request, "layoutPageTemplateCollectionId")), " > ") %>
 			</p>
 
 			<p class="sidebar-dt">
@@ -102,13 +100,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 			<c:if test="<%= layoutPageTemplateCollection == null %>">
 				<p class="sidebar-dd text-secondary">
-					<%= displayPageDisplayContext.getHomeItemsCount(scopeGroupId) %>
+					<%= displayPageInfoPanelDisplayContext.getHomeItemsCount(scopeGroupId) %>
 				</p>
 			</c:if>
 
 			<c:if test="<%= layoutPageTemplateCollection != null %>">
 				<p class="sidebar-dd text-secondary">
-					<%= displayPageDisplayContext.getLayoutPageTemplateCollectionItemsCount(layoutPageTemplateCollection) %>
+					<%= displayPageInfoPanelDisplayContext.getLayoutPageTemplateCollectionItemsCount(layoutPageTemplateCollection) %>
 				</p>
 
 				<p class="sidebar-dt">
@@ -120,7 +118,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						symbol="folder"
 					/>
 
-					<%= StringUtil.merge(displayPageDisplayContext.getLayoutPageTemplateCollectionPath(layoutPageTemplateCollection.getParentLayoutPageTemplateCollectionId()), " > ") %>
+					<%= StringUtil.merge(displayPageInfoPanelDisplayContext.getLayoutPageTemplateCollectionPath(layoutPageTemplateCollection.getParentLayoutPageTemplateCollectionId()), " > ") %>
 				</p>
 
 				<p class="sidebar-dt">

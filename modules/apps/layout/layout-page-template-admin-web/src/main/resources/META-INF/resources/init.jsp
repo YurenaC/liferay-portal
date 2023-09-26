@@ -26,6 +26,7 @@ page import="com.liferay.layout.page.template.admin.web.internal.dao.search.Layo
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.AssetDisplayPageUsagesDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.AssetDisplayPageUsagesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.DisplayPageDisplayContext" %><%@
+page import="com.liferay.layout.page.template.admin.web.internal.display.context.DisplayPageInfoPanelDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.DisplayPageManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.ImportDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.LayoutPageTemplateCollectionsDisplayContext" %><%@
@@ -57,7 +58,6 @@ page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil" %><%@
-page import="com.liferay.petra.function.transform.TransformUtil" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.exception.PortalException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredLayoutPrototypeException" %><%@
@@ -86,7 +86,6 @@ page import="com.liferay.portal.util.PropsValues" %>
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Collections" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Objects" %>
 
