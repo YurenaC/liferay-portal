@@ -10,10 +10,9 @@
 <%
 DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayContext(request, renderRequest, renderResponse);
 
-List<LayoutPageTemplateCollection> layoutPageTemplateCollections = (List<LayoutPageTemplateCollection>)request.getAttribute(LayoutPageTemplateAdminWebKeys.LAYOUT_PAGE_TEMPLATE_COLLECTIONS);
 List<LayoutPageTemplateEntry> layoutPageTemplateEntries = (List<LayoutPageTemplateEntry>)request.getAttribute(LayoutPageTemplateAdminWebKeys.LAYOUT_PAGE_TEMPLATE_ENTRIES);
 
-layoutPageTemplateCollections = displayPageDisplayContext.getLayoutPageTemplateCollectionList(layoutPageTemplateCollections, layoutPageTemplateEntries);
+List<LayoutPageTemplateCollection> layoutPageTemplateCollections = displayPageDisplayContext.getLayoutPageTemplateCollectionList((List<LayoutPageTemplateCollection>)request.getAttribute(LayoutPageTemplateAdminWebKeys.LAYOUT_PAGE_TEMPLATE_COLLECTIONS), layoutPageTemplateEntries);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
@@ -48,39 +47,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<liferay-ui:message key="location" />
 			</p>
 
-			<%
-			long layoutPageTemplateCollectionId = ParamUtil.getLong(request, "layoutPageTemplateCollectionId");
-
-			LayoutPageTemplateCollection layoutPageTemplateCollection = LayoutPageTemplateCollectionLocalServiceUtil.fetchLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
-
-			List<String> paths = new ArrayList<>();
-			%>
-
-			<c:if test="<%= layoutPageTemplateCollection == null %>">
-
-				<%
-				paths.add(LanguageUtil.get(request, "home"));
-				%>
-
-			</c:if>
-
-			<c:if test="<%= layoutPageTemplateCollection != null %>">
-
-				<%
-				paths = TransformUtil.transform(layoutPageTemplateCollection.getAncestors(), curLayoutPageTemplateCollection -> HtmlUtil.escape(curLayoutPageTemplateCollection.getName()));
-
-				paths.add(LanguageUtil.get(request, "home"));
-
-				Collections.reverse(paths);
-				%>
-
-			</c:if>
-
 			<p class="sidebar-dd text-secondary">
 				<clay:icon
 					symbol="folder"
 				/>
-				<%= StringUtil.merge(paths, " > ") %>
+				<%= StringUtil.merge(displayPageDisplayContext.getLayoutPageTemplateCollectionPath(ParamUtil.getLong(request, "layoutPageTemplateCollectionId")), " > ") %>
 			</p>
 
 			<p class="sidebar-dt">
@@ -149,19 +120,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						symbol="folder"
 					/>
 
-					<%
-					List<String> paths = TransformUtil.transform(layoutPageTemplateCollection.getAncestors(), curLayoutPageTemplateCollection -> HtmlUtil.escape(curLayoutPageTemplateCollection.getName()));
-
-					if (!paths.isEmpty()) {
-						paths.remove(0);
-					}
-
-					paths.add(LanguageUtil.get(request, "home"));
-
-					Collections.reverse(paths);
-					%>
-
-					<%= StringUtil.merge(paths, " > ") %>
+					<%= StringUtil.merge(displayPageDisplayContext.getLayoutPageTemplateCollectionPath(layoutPageTemplateCollection.getParentLayoutPageTemplateCollectionId()), " > ") %>
 				</p>
 
 				<p class="sidebar-dt">

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -318,6 +319,28 @@ public class DisplayPageDisplayContext {
 		}
 
 		return layoutPageTemplateCollections;
+	}
+
+	public List<String> getLayoutPageTemplateCollectionPath(
+		long layoutPageTemplateCollectionId) {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
+
+		List<String> paths = new ArrayList<>();
+
+		if (layoutPageTemplateCollection != null) {
+			paths = TransformUtil.transform(
+				getLayoutPageTemplateBreadcrumbEntries(),
+				curLayoutPageTemplateCollection -> HtmlUtil.escape(
+					curLayoutPageTemplateCollection.getTitle()));
+		}
+
+		paths.add(LanguageUtil.get(_httpServletRequest, "home"));
+
+		Collections.reverse(paths);
+
+		return paths;
 	}
 
 	public long getLayoutPageTemplateEntryId() {
