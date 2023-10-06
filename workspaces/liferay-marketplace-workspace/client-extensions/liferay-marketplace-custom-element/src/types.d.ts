@@ -107,11 +107,15 @@ type Cart = {
 	billingAddress: BillingAddress;
 	cartItems: CartItem[];
 	currencyCode: string;
+	id: number;
 	orderTypeExternalReferenceCode: string;
 	orderTypeId: number;
 	paymentMethod: string;
 	purchaseOrderNumber?: string;
 	shippingAddress: BillingAddress;
+	summary: {
+		totalFormatted: string;
+	};
 };
 
 type CartItem = {
@@ -232,7 +236,7 @@ interface OrderType {
 
 type PaymentMethodMode = 'PayPal';
 
-type PaymentMethodSelector = 'order' | 'pay' | 'trial';
+type PaymentMethodSelector = 'order' | 'pay' | 'trial' | 'free';
 
 interface PlacedOrder {
 	account: string;
@@ -307,6 +311,7 @@ interface PostCheckoutCartResponse extends PostCartResponse {
 interface Product {
 	active: boolean;
 	attachments: ProductAttachment[];
+	catalog: Catalog;
 	catalogId: number;
 	categories: ProductCategories[];
 	customFields?: CustomField[];

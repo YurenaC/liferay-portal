@@ -494,6 +494,12 @@ public class KnowledgeBaseArticleResourceImpl
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 
+		Date datePublished = knowledgeBaseArticle.getDatePublished();
+
+		if (datePublished == null) {
+			datePublished = new Date();
+		}
+
 		return _toKnowledgeBaseArticle(
 			_kbArticleService.addKBArticle(
 				externalReferenceCode, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
@@ -501,8 +507,8 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getFriendlyUrlPath(),
 				knowledgeBaseArticle.getArticleBody(),
-				knowledgeBaseArticle.getDescription(), null, null, new Date(),
-				null, null, null,
+				knowledgeBaseArticle.getDescription(), null, null,
+				datePublished, null, null, null,
 				_createServiceContext(
 					knowledgeBaseArticle.getTaxonomyCategoryIds(),
 					knowledgeBaseArticle.getKeywords(), groupId,
@@ -677,7 +683,7 @@ public class KnowledgeBaseArticleResourceImpl
 				kbArticle.getResourcePrimKey(), knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null,
-				kbArticle.getDisplayDate(), null, null, null, null,
+				knowledgeBaseArticle.getDatePublished(), null, null, null, null,
 				_createServiceContext(
 					taxonomyCategoryIds,
 					GetterUtil.getStringValues(

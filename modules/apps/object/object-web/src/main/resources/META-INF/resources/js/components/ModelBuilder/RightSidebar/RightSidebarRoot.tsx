@@ -14,7 +14,13 @@ interface IRightSidebarRoot {
 }
 
 export function RightSideBarRoot({children}: IRightSidebarRoot) {
-	const [{selectedObjectField}] = useObjectFolderContext();
+	const [
+		{
+			selectedObjectDefinitionNode,
+			selectedObjectField,
+			selectedObjectRelationship,
+		},
+	] = useObjectFolderContext();
 	const [loading, setLoading] = useState(false);
 	const [verticalBarWidth, setVerticalBarWidth] = useState(320);
 
@@ -39,7 +45,11 @@ export function RightSideBarRoot({children}: IRightSidebarRoot) {
 		setNewVerticalBarWidthValue(320);
 
 		return;
-	}, [selectedObjectField]);
+	}, [
+		selectedObjectDefinitionNode,
+		selectedObjectField,
+		selectedObjectRelationship,
+	]);
 
 	return (
 		<>

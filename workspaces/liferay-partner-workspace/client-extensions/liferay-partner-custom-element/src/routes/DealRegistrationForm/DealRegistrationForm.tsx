@@ -28,6 +28,9 @@ const initialFormValues: DealRegistration = {
 	partnerAccount: {},
 	partnerFirstName: '',
 	partnerLastName: '',
+	primaryPartnerEmail: '',
+	primaryPartnerFirstName: '',
+	primaryPartnerLastName: '',
 	primaryProspect: {
 		businessUnit: '',
 		department: {},

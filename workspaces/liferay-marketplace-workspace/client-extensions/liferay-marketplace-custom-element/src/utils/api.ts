@@ -70,6 +70,75 @@ export function createApp({
 	});
 }
 
+export async function getPricelist() {
+	const response = await fetch(
+		`${baseURL}o/headless-commerce-admin-pricing/v2.0/price-lists`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return await response.json();
+}
+
+export async function getPricelistByCatalogName(catalogName: string) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists?filter=type eq 'price-list'&search=contains(catalogName,'${catalogName}')`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return await response.json();
+}
+
+export async function getPriceEntrieListByPricelistId(priceListId: string) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListId}/price-entries`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return response.json();
+}
+
+export async function getTierPriceByPriceEntrieId(priceEntriId: string) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-entries/${priceEntriId}/tier-prices`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return response.json();
+}
+
+export async function getTierPrice(catalogName: string) {
+	const priceList = await getPricelistByCatalogName(catalogName);
+
+	const listPriceId = priceList?.items[0]?.id;
+
+	const getPriceEntrie = await getPriceEntrieListByPricelistId(listPriceId);
+	const priceEntrieList = getPriceEntrie?.items;
+
+	const tierPrices = await Promise.all(
+		priceEntrieList.map(async (priceEntrieList: any) => {
+			const tierPrice = await getTierPriceByPriceEntrieId(
+				priceEntrieList.priceEntryId
+			);
+
+			return {skuId: priceEntrieList.skuId, tierPrice: tierPrice.items};
+		})
+	);
+
+	return tierPrices;
+}
+
 export async function createAppLicensePrice({
 	appProductId,
 	body,
@@ -88,6 +157,15 @@ export async function createAppLicensePrice({
 	);
 
 	return await response.json();
+}
+
+export async function getLicenseDescription() {
+	const response = await fetch(`${baseURL}/o/c/licensetypesdescriptions/`, {
+		headers,
+		method: 'GET',
+	});
+
+	return response.json();
 }
 
 export async function createAppSKU({
@@ -247,6 +325,59 @@ export async function getAccountPostalAddressesByAccountId(accountId: number) {
 	return (await response.json()) as {items: AccountPostalAddresses[]};
 }
 
+export async function createCart({
+	accountId,
+	channelId,
+	currencyCode = 'USD',
+	orderTypeExternalReferenceCode,
+	orderTypeId,
+}: {
+	accountId: number;
+	channelId: number;
+	currencyCode?: string;
+	orderTypeExternalReferenceCode: string;
+	orderTypeId: number;
+}) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/carts`,
+		{
+			body: JSON.stringify({
+				accountId,
+				currencyCode,
+				orderTypeExternalReferenceCode,
+				orderTypeId,
+			}),
+			headers,
+			method: 'POST',
+		}
+	);
+
+	return response.json();
+}
+
+export async function updateCart(cartId: number, cart: Cart) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}`,
+		{
+			body: JSON.stringify(cart),
+			headers,
+			method: 'PATCH',
+		}
+	);
+
+	return response.json();
+}
+
+export async function deleteCart(cartId: number) {
+	await fetch(
+		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}`,
+		{
+			headers,
+			method: 'DELETE',
+		}
+	);
+}
+
 export async function getCart(cartId: number) {
 	const cartResponse = await fetch(
 		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}`,
@@ -257,6 +388,21 @@ export async function getCart(cartId: number) {
 	);
 
 	return await cartResponse.json();
+}
+
+export async function getCartByChannelAndAccountId(
+	channelId: number,
+	accountId: number
+) {
+	const cartResponse = await fetch(
+		`${baseURL}/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/account/${accountId}/carts`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return cartResponse.json();
 }
 
 export async function getCartItems(cartId: number) {

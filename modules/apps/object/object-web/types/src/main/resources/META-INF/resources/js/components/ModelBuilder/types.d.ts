@@ -45,6 +45,7 @@ export declare type TAction =
 				objectDefinitionExternalReferenceCode: string;
 				objectDefinitionNodes: Node<ObjectDefinitionNodeData>[];
 				objectRelationshipEdges: Edge<ObjectRelationshipEdgeData>[];
+				selectedObjectDefinitionNode: Node<ObjectDefinitionNodeData>;
 			};
 			type: TYPES.ADD_OBJECT_FIELD;
 	  }
@@ -130,7 +131,7 @@ export declare type TAction =
 			payload: {
 				objectDefinitionNodes: Node<ObjectDefinitionNodeData>[];
 				objectRelationshipEdges: Edge<ObjectRelationshipEdgeData>[];
-				selectedObjectRelationshipId: string;
+				selectedObjectRelationshipId: number;
 			};
 			type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE;
 	  }
@@ -178,7 +179,7 @@ export declare type TState = {
 	selectedObjectDefinitionNode: Node<ObjectDefinitionNodeData> | null;
 	selectedObjectField?: ObjectFieldNodeRow;
 	selectedObjectFolder: ObjectFolder;
-	selectedObjectRelationship: ObjectRelationship;
+	selectedObjectRelationship?: Edge<ObjectRelationshipEdgeData>;
 	showChangesSaved: boolean;
 	workflowStatusJSONArray: LabelValueObject[];
 };

@@ -572,6 +572,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		List<Build> failedDownstreamBuilds = new ArrayList<>();
 
 		failedDownstreamBuilds.addAll(getDownstreamBuilds("ABORTED", null));
+		failedDownstreamBuilds.addAll(getDownstreamBuilds("MISSING", null));
 		failedDownstreamBuilds.addAll(getDownstreamBuilds("FAILURE", null));
 		failedDownstreamBuilds.addAll(getDownstreamBuilds("UNSTABLE", null));
 
@@ -643,21 +644,6 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		}
 
 		_downstreamBuilds.clear();
-	}
-
-	@Override
-	protected void setResult(String result) {
-		this.result = result;
-
-		if ((result == null) ||
-			(getDownstreamBuildCount("completed") < getDownstreamBuildCount(
-				null))) {
-
-			setStatus("running");
-		}
-		else {
-			setStatus("completed");
-		}
 	}
 
 	@Override

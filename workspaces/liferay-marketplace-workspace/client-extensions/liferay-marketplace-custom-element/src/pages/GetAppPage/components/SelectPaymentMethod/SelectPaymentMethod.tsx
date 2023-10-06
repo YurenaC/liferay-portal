@@ -7,10 +7,11 @@ import {useState} from 'react';
 
 import {Input} from '../../../../components/Input/Input';
 import {paymentMethod} from '../../enums/paymentMethod';
+import {StepType} from '../../enums/stepType';
 import {BillingAddress} from './components/BillingAddress/BillingAddress';
 import {PaymentMethodMode} from './components/PaymentMethodMode/PaymentMethodMode';
 import {PaymentMethodSelector} from './components/PaymentMethodSelector/PaymentMethodSelector';
-import {TrialTimeline} from './components/TrialTimeLine/TrialTimeline';
+import {TrialMethod} from './components/TrialMethod/TrialMethod';
 
 interface SelectPaymentMethodProps {
 	addresses: BillingAddress[];
@@ -24,6 +25,7 @@ interface SelectPaymentMethodProps {
 	setEnablePurchaseButton: (value: boolean) => void;
 	setPurchaseOrderNumber: (value: string) => void;
 	setSelectedPaymentMethod: (value: PaymentMethodSelector) => void;
+	step: StepType;
 }
 
 export function SelectPaymentMethod({
@@ -38,11 +40,10 @@ export function SelectPaymentMethod({
 	setEnablePurchaseButton,
 	setPurchaseOrderNumber,
 	setSelectedPaymentMethod,
+	step,
 }: SelectPaymentMethodProps) {
-	const [selectedAddress, setSelectedAddress] = useState<string>('');
-	const [showNewAddressButton, setShowNewAddressButton] = useState<boolean>(
-		true
-	);
+	const [selectedAddress, setSelectedAddress] = useState('');
+	const [showNewAddressButton, setShowNewAddressButton] = useState(true);
 
 	return (
 		<div className="select-payment-step">
@@ -51,10 +52,11 @@ export function SelectPaymentMethod({
 					enableTrial={enableTrialMethod}
 					selectedPaymentMethod={selectedPaymentMethod as string}
 					setSelectedPaymentMethod={setSelectedPaymentMethod}
+					step={step}
 				/>
 			</div>
 
-			{selectedPaymentMethod === paymentMethod.TRIAL && <TrialTimeline />}
+			{selectedPaymentMethod === paymentMethod.TRIAL && <TrialMethod />}
 
 			{selectedPaymentMethod === paymentMethod.PAY && (
 				<PaymentMethodMode

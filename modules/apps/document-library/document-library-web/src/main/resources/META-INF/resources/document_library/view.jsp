@@ -309,7 +309,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 
 		<div>
 			<react:component
-				module="document_library/js/categorization/tags/EditTags.es"
+				module="document_library/js/categorization/tags/EditTags"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace())
@@ -334,7 +334,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 
 		<div>
 			<react:component
-				module="document_library/js/categorization/categories/EditCategories.es"
+				module="document_library/js/categorization/categories/EditCategories"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace())

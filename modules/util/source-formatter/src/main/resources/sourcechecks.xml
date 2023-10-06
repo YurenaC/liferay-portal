@@ -613,10 +613,6 @@
 			<category name="Upgrade" />
 			<description name="Replace setGroupPermissions and setGuestPermissions by new implementation" />
 		</check>
-		<check name="JavaUpgradeOnAfterUpdateParameterCheck">
-			<category name="Upgrade" />
-			<description name="Add new parameter in method onAfterUpdate for classes extending the BaseModelListener" />
-		</check>
 		<check name="MethodCallsOrderCheck">
 			<category name="Styling" />
 			<description name="Sorts method calls for certain object (for example, `put` calls in `java.util.HashMap`)." />
@@ -1658,6 +1654,10 @@
 		<check name="UpgradeJavaAssetEntryAssetCategoriesCheck">
 			<category name="Upgrade" />
 			<description name="Replaces methods referring to class `AssetEntryAssetCategory` in class `AssetCategoryLocalService` with equivalent methods in class `AssetEntryAssetCategoryRelLocalService`." />
+		</check>
+		<check name="UpgradeJavaBaseModelListenerCheck">
+			<category name="Upgrade" />
+			<description name="Add parameter in the onAfterUpdate and onBeforeUpdate methods of the BaseModelListener class" />
 		</check>
 		<check name="UpgradeJavaBasePanelAppExtendedClassesCheck">
 			<category name="Upgrade" />

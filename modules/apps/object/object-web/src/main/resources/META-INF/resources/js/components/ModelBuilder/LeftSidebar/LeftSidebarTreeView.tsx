@@ -14,11 +14,12 @@ import {openToast, sub} from 'frontend-js-web';
 import React from 'react';
 import {Node, useStoreState, useZoomPanHelper} from 'react-flow-renderer';
 
-import './LeftSidebar.scss';
 import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {LeftSidebarItem, LeftSidebarObjectDefinitionItem} from '../types';
+
+import './LeftSidebar.scss';
 
 const TYPES_TO_SYMBOLS = {
 	linkedObjectDefinition: 'link',
@@ -243,6 +244,9 @@ export default function LeftSidebarTreeView({
 									<ClayTooltipProvider>
 										<div className="lfr-objects__model-builder-left-sidebar-go-to-folder-button">
 											<ClayButton
+												aria-label={Liferay.Language.get(
+													'go-to-folder'
+												)}
 												data-tooltip-align="bottom"
 												displayType={null}
 												onClick={() =>
@@ -319,6 +323,9 @@ export default function LeftSidebarTreeView({
 													]}
 													trigger={
 														<ClayButton
+															aria-label={Liferay.Language.get(
+																'actions'
+															)}
 															displayType={null}
 															monospaced
 														>

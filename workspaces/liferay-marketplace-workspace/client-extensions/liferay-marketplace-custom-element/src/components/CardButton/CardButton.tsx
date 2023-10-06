@@ -4,42 +4,84 @@
  */
 
 import classNames from 'classnames';
-import {MouseEvent} from 'react';
+import {MouseEvent, ReactNode} from 'react';
+
+import sitesIcon from '../../assets/icons/sites_icon.svg';
 
 import './CardButton.scss';
+import {StepType} from '../../pages/GetAppPage/enums/stepType';
 
 export function CardButton({
 	description,
 	disabled,
-	icon,
+	icon = '',
+	iconRight,
 	onClick,
 	selected,
+	step,
 	title,
 }: {
 	description: string;
 	disabled: boolean;
-	icon?: string;
+	icon?: ReactNode;
+	iconRight?: boolean;
 	onClick: (event: MouseEvent) => void;
 	selected: boolean;
+	step?: StepType;
 	title: string;
 }) {
 	return (
 		<div
-			className={classNames('card-button', {
+			className={classNames('card-button d-flex', {
 				'card-button--disabled': disabled,
 				'card-button--selected': selected,
 			})}
 			onClick={onClick}
 		>
-			<img alt="trial" className="card-button-icon" src={icon} />
+			{step === StepType.PAYMENT ? (
+				<img
+					alt="trial"
+					className="card-button-icon"
+					src={icon as string}
+				/>
+			) : (
+				!iconRight &&
+				(icon ? (
+					icon
+				) : (
+					<img
+						alt="sites-icon"
+						className="card-button-icon"
+						src={sitesIcon}
+					/>
+				))
+			)}
 
 			<div className="card-button-info">
 				<div className="card-button-title">
-					<div className="card-button-text">{title}</div>
+					<div
+						className={classNames('card-button-text', {
+							'icon-right': iconRight,
+						})}
+					>
+						{title}
+						{step !== StepType.PAYMENT && iconRight && icon}
+					</div>
 
-					<div className="card-button-description">{description}</div>
+					<div
+						className={classNames({
+							'card-button-description':
+								step === StepType.PAYMENT,
+							'card-button-description-paid':
+								step === StepType.LICENSES,
+						})}
+					>
+						{description}
+					</div>
 				</div>
 			</div>
 		</div>
 	);
 }
+
+export default CardButton;

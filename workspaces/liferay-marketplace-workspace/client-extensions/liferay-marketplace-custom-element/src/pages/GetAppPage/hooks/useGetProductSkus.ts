@@ -23,8 +23,8 @@ const useGetProductSkus = (
 
 		if (product && product?.skus?.length > 1) {
 			const isTrial = !!product?.skus?.find(
-				({sku, skuOptions: [skuOption]}) =>
-					sku.endsWith('ts') && skuOption.value === 'yes'
+				({skuOptions: [skuOption]}) =>
+					skuOption?.key !== 'trial' && skuOption.value === 'yes'
 			);
 			setEnableTrialMethod(isTrial);
 

@@ -457,6 +457,7 @@
 	"this-field-exceeded-x-characters": "This field exceeded {0} characters.",
 	"this-field-is-required": "This field is required.",
 	"this-key-does-not-expire": "This key does not expire",
+	"this-liferay-contact-does-not-exist-please-enter-a-correct-email-address": "This Liferay contact does not exist. Please enter a correct email address.",
 	"this-may-affect-your-use-of-the-customer-portal-please-go-to": "this may affect your use of the Customer Portal, please go to",
 	"this-team-member-is-assigned-as-an-incident-contact-and-cannot-be-removed": "This team member is assigned as an Incident Contact and cannot be removed. Please remove them from all incident contact roles and then try again.",
 	"this-user-will-be-the-recepient-of-any-high-priority-communications": "This user will be the recepient of any high priority communications.",
