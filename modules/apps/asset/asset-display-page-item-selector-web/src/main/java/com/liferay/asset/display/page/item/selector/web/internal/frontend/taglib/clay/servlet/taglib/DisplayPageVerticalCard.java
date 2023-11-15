@@ -14,10 +14,12 @@ import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -25,12 +27,14 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 
@@ -57,6 +61,29 @@ public class DisplayPageVerticalCard
 
 		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 			_layoutPageTemplateEntry.getPlid());
+	}
+
+	@Override
+	public String getCssClass() {
+		return "card-interactive card-interactive-secondary selector-button";
+	}
+
+	@Override
+	public Map<String, String> getDynamicAttributes() {
+		return HashMapBuilder.put(
+			"data-return-type", AssetEntryItemSelectorReturnType.class.getName()
+		).put(
+			"data-value",
+			JSONUtil.put(
+				"id", _layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+			).put(
+				"name", _layoutPageTemplateEntry.getName()
+			).put(
+				"plid", _layoutPageTemplateEntry.getPlid()
+			).put(
+				"type", "asset-display-page"
+			).toString()
+		).build();
 	}
 
 	@Override
